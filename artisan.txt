@@ -1,0 +1,18 @@
+1、使用artisan来进行迁移（在数据库中创建database/migrations文件夹中文件对应的表）
+    php artisan migrate
+
+2、新建迁移文件
+    ①新建一个表的迁移文件
+        php artisan make:migration create_[students]_table
+        --table 和 --create 参数可以用来指定数据表名称，以及迁移文件是否要建立新的数据表
+    ②生成模型的同时生成迁移文件
+        php artisan make:model [Students] -m
+
+3、数据填充
+    ①创建一个填充文件，并完善
+        php artisan make:seeder [StudentsTableSeeder]
+    ②执行单个填充文件
+        php artisan db:seed --class=[StudentsTableSeeder]
+    ③批量执行填充文件
+        php artisan db:seed
+        需要在DatabaseSeeder.php的run函数中加入$this->call(StudentsTableSeeder::class)

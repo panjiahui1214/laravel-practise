@@ -1,0 +1,27 @@
+1、生成需要的迁移文件
+    php artisan queue:table             生成2017_10_29_131647_create_jobs_table.php
+    php artisan queue:failed-table      生成队列任务执行失败表
+
+2、执行迁移
+    php artisan migrate
+
+3、创建任务类
+    php artisan make:job SendEmail
+    创建app/Jobs/SendEmail.php
+
+4、把任务推送到到队列中（jobs表中也会新增记录）
+    dispatch(new SendEmail('1300135503@qq.com'));
+
+5、执行任务（任务执行后，jobs表中该条记录则消失，如执行失败则写入failed_jobs表中）
+    php artisan queue:listen
+
+6、查看执行失败队列
+    php artisan queue:failed
+
+7、执行失败队列任务（如果再次失败则重新写入failed_jobs表中）
+    php artisan queue:retey 任务ID值       重新执行单条失败任务
+    php artisan queue:retey all            重新执行所有失败任务
+
+8、清除失败队列任务
+    php artisan queue:forget 任务ID值      清除单条失败任务
+    php artisan queue:flush                清除所有失败任务
