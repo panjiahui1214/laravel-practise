@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Student;
+use Illuminate\Support\Facades\Session;
 
 class StudentController extends Controller
 {
@@ -224,5 +226,135 @@ class StudentController extends Controller
 
     public function urlTest() {
         return 'urlTest';
+    }
+
+    public function request1(Request $request) {
+        /* 1、取值 */
+        //echo $request->input('name');
+        //echo $request->input('sex', '性别未知');
+
+        // 判断参数是否存在
+//        if($request->has('name')) {
+//            echo $request->input('name');
+//        } else {
+//            echo '无name参数';
+//        }
+
+        // 获取所有参数
+//        $req = $request->all();
+//        dd($req);
+
+        /* 2、判断请求类型 */
+        // 直接返回请求类型
+//        echo $request->method();
+
+        // 判断是否为某种请求类型，返回布尔值
+//        if($request->isMethod('GET')) {
+//            echo '这是GET请求';
+//        } else {
+//            echo '这不是GET请求';
+//        }
+
+        // 判断请求类型是否为ajax，返回布尔值
+//        $isAjax = $request->ajax();
+//        var_dump($isAjax);
+
+        // 判断请求路径
+//        $url = $request->is('student/*'); //请求路径中是否包含student
+//        var_dump($url);
+
+        // 获取url(不包含get传递参数)
+        echo $request->url();
+    }
+
+    public function session1(Request $request) {
+        /* 1、HTTP request session() */
+        // 设置session
+//        $request->session()->put('key1', 'val1');
+        // 获取单个session
+//        echo $request->session()->get('key1');
+
+        /* 2、session辅助函数 */
+//        session()->put('key2', 'val2');
+//        echo session()->get('key2');
+
+        /* 3、session facade */
+        // 注意：需加上命名空间use Illuminate\Support\Facades\Session;
+//        Session::put('key3', 'val3');
+//        echo Session::get('key3');
+        // 获取单个session，不存在则获取默认值
+//        echo Session::get('key4', 'default');
+        // 以数组的形式存设置session
+//        Session::put(['key4' => 'val4']);
+        // 把数据存储到session的数组中
+//        Session::push('student', 'jane');
+//        Session::push('student', 'imooc');
+
+        // 数据暂存：只有第一次访问存在
+        Session::flash('key-flash', 'val-flash');
+    }
+    public function session2(Request $request) {
+        // 从session中获取数据然后删除
+//        $sess = Session::pull('student', 'default');
+//        var_dump($sess);
+
+        // 获取session中所有数据
+//        $all = Session::all();
+//        dd($all);
+
+        // 判断某个session是否存在
+//        if(Session::has('key6')) {
+//            echo Session::get('key6');
+//        } else {
+//            echo 'key6 not exist';
+//        }
+
+//        echo 'before forget:' . Session::get('key1') . '<br>';
+        // 删除单个session
+//        Session::forget('key1');
+//        echo 'after forget:' . Session::get('key1');
+
+        // 删除所有session
+//        Session::flush();
+//        dd(Session::all());
+
+//
+        echo Session::get('message', '暂无快闪数据');
+    }
+
+    public function response() {
+//        $data = [
+//            'errCode'   =>  0,
+//            'errMsg'    =>  'success',
+//            'errData'   =>  'student'
+//        ];
+        //var_dump($data);
+        /* 1、响应类型为json */
+//        return response()->json($data);
+
+        /* 2、响应类型为重定向 */
+//        return redirect('session2'); //跳转到session2页面
+
+        // 重定向携带参数使用with，with原理为session的flush
+//        return redirect('session2')->with('message', '我是快闪数据');
+//        return redirect()->action('StudentController@session2')
+//            ->with('message', '我是快闪数据'); //与上一语句效果相同
+
+        // 通过route的别名来进行跳转
+//        return redirect()->route('session2')
+//            ->with('message', '我是快闪数据');
+
+        // 返回上一个页面
+        return redirect()->back();
+    }
+
+    public function activity0() {
+        return '活动即将开始，敬请期待！';
+    }
+    public function activity1() {
+        return '活动正在进行中，玩得愉快1';
+    }
+    public function activity2() {
+        return '活动正在进行中，玩得愉快2';
     }
 }

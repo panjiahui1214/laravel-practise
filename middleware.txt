@@ -1,0 +1,10 @@
+1、新建中间件
+    在app/Http/Middleware中创建中间件文件，如Activity.php
+2、注册中间件
+    在app/Http/Kernel.php中进行注册，
+    如在$routeMiddleware中添加'activity' => \App\Http\Middleware\activity::class
+3、使用中间件
+    在控制器中撰写方法，并添加相应路由，路由需放在包含中间件的群组中
+4、中间件的前置、后置操作
+    在请求(return)之前是前置操作，
+    在请求(return)之后是后置操作

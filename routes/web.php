@@ -102,3 +102,22 @@ Route::any('cache1', 'StudentsController@cache1');
 Route::any('cache2', 'StudentsController@cache2');
 Route::any('error', 'StudentsController@error');
 Route::any('queue', 'StudentsController@queue');
+
+Route::any('student/request1', 'StudentController@request1');
+Route::group(['middleware' => 'web'], function() {
+    // 使用中间件web（app/http/Kemel.php），其中已包含session_start()
+    Route::any('session1', 'StudentController@session1');
+    Route::any('session2', [
+        'as'    =>  'session2',
+        'uses'  =>  'StudentController@session2'
+    ]);
+});
+Route::any('response', 'StudentController@response');
+
+// 宣传页面
+Route::any('activity0', 'StudentController@activity0');
+// 活动页面
+Route::group(['middleware' => 'activity'], function() {
+    Route::any('activity1', 'StudentController@activity1');
+    Route::any('activity2', 'StudentController@activity2');
+});
