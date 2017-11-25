@@ -121,3 +121,12 @@ Route::group(['middleware' => 'activity'], function() {
     Route::any('activity1', 'StudentController@activity1');
     Route::any('activity2', 'StudentController@activity2');
 });
+
+Route::group(['middleware' => 'web'], function() {
+    Route::get('StudentFm/index', 'StudentFmController@index');
+    Route::any('StudentFm/create', 'StudentFmController@create');
+    Route::any('StudentFm/save', 'StudentFmController@save');
+    Route::any('StudentFm/update/{id}', 'StudentFmController@update');
+    Route::any('StudentFm/detail/{id}', 'StudentFmController@detail');
+    Route::any('StudentFm/delete/{id}', 'StudentFmController@delete');
+});
